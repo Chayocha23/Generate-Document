@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานตรวจสอบผลิตภัณฑ์ QC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="doc-shell">
+        <!-- ==========================================================
+     PAGE 1 : QC INSPECTION REPORT
+     ========================================================== -->
+        <div class="a4-page" id="page-1">
+
+            <div style="display: flex; margin-bottom: 15px; min-height: 72px; box-sizing: border-box; background: #fff; width: 100%;">
+                <div style="width: 35%; padding: 5px; display: flex; align-items: center; gap: 8px; box-sizing: border-box;">
+                    <img src="Logo Physic.png" alt="Logo" style="height: 52px; object-fit: contain; flex-shrink: 0;">
+                    <div style="flex: 1; line-height: 1.2; text-align: left; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="font-weight: 500; font-size: 10.5px; letter-spacing: -0.2px;">ห้างหุ้นส่วนจำกัด สำนักพิมพ์ฟิสิกส์เซ็นเตอร์</div>
+                        <div style="font-size: 7px; color: #555; border-top: 0.5px solid #000; padding-top: 2px; margin-top: 2px; width: 100%;">
+                            รายงานการตรวจสอบผลิตภัณฑ์ในกระบวนการผลิต
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                style="font-size: 16px; font-weight: bold; text-align: center; margin-top: -15px; margin-bottom: 20px; font-family: sans-serif;">
+                รายงานการตรวจสอบผลิตภัณฑ์ในกระบวนการผลิต-เครื่องทำถุงกระดาษ
+            </div>
+
+            <div class="exact-header-block" style="margin-top: -15px;">
+                <div class="header-grid">
+                    <table class="header-table">
+                        <tr>
+                            <td class="label">ลูกค้า / CLASS</td>
+                            <td class="value" colspan="3">
+                                <div contenteditable="true" class="table-input"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">รหัสสินค้า</td>
+                            <td class="value" colspan="3">
+                                <div contenteditable="true" class="table-input font-mono"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">ชื่อสินค้า</td>
+                            <td class="value" colspan="3">
+                                <div contenteditable="true" class="table-input font-bold"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label" rowspan="2">ใบสั่งผลิต</td>
+                            <td class="value" rowspan="2">
+                                <div contenteditable="true" class="table-input font-mono"></div>
+                            </td>
+                            <td class="label-sub">จำนวนสั่งผลิต</td>
+                            <td class="value-sub">
+                                <div contenteditable="true" class="table-input text-center"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label-sub" style="border-top: 1px solid var(--color-border);">ผลิตจริง</td>
+                            <td class="value-sub" style="border-top: 1px solid var(--color-border);">
+                                <div contenteditable="true" class="table-input text-center"></div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="header-table header-table-right">
+                        <tr>
+                            <td class="label">เครื่องที่</td>
+                            <td class="value">
+                                <div contenteditable="true" class="table-input"></div>
+                            </td>
+                            <td class="label" style="width: 50px;">กะ</td>
+                            <td class="value">
+                                <div contenteditable="true" class="table-input"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">วันที่</td>
+                            <td class="value" colspan="3">
+                                <div contenteditable="true" class="table-input"></div>
+                            </td>
+                        </tr>
+                        <tr style="height: 45px;">
+                            <td class="label">หัวหน้าแผนก</td>
+                            <td class="value" colspan="3">
+                                <div contenteditable="true" class="table-input"></div>
+                            </td>
+                        </tr>
+                        <tr style="height: 45px;">
+                            <td class="label">ผู้ปฏิบัติงาน</td>
+                            <td class="value" colspan="3">
+                                <div contenteditable="true" class="table-input"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <table class="qc-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">รายการ</th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="param-name">1. ชนิดกระดาษตรงตามใบสั่งผลิต</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">2. ขนาดถูกต้องตามใบสั่งผลิต (±2mm.)</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">3. กาวติดสนิททั้งด้านข้างและด้านก้นถุง</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">4. กระดาษไม่ยับ / ไม่ยื่น</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">5. ไม่สกปรก / ไม่เลอะกาว</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">6. มุมก้นถุงไม่ยับ / ไม่พับ / ไม่ฉีกขาด</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">7. ไม่มีรอยขีดข่วน</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr class="row-check-time">
+                        <td class="param-name">เวลาที่สุ่มตรวจ</td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="qc-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">รายการ</th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan="2">
+                            <div class="th-flex">ครั้งที่ <div contenteditable="true" class="table-input header-input">
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                        <th>ผลการตรวจ</th>
+                        <th>ของเสีย</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="param-name">1. ชนิดกระดาษตรงตามใบสั่งผลิต</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">2. ขนาดถูกต้องตามใบสั่งผลิต (±2mm.)</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">3. กาวติดสนิททั้งด้านข้างและด้านก้นถุง</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">4. กระดาษไม่ยับ / ไม่ยื่น</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">5. ไม่สกปรก / ไม่เลอะกาว</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">6. มุมก้นถุงไม่ยับ / ไม่พับ / ไม่ฉีกขาด</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">7. ไม่มีรอยขีดข่วน</td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td>
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                    <tr class="row-check-time">
+                        <td class="param-name">เวลาที่สุ่มตรวจ</td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                        <td colspan="2">
+                            <div contenteditable="true" class="table-input"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px; border: none; table-layout: fixed;">
+                <tr>
+                    <td style="width: 320px; border: none; padding: 0; text-align: left; vertical-align: top;">
+                        <div style="font-size: 13px; font-weight: 500; line-height: 1.6; color: #000;">
+                            <div>ผลการตรวจ : / = ผลการตรวจสอบผ่าน</div>
+                            <div style="padding-left: 77px;">X = ผลการตรวจสอบไม่ผ่าน</div>
+                        </div>
+
+                        <div
+                            style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 500; width: 310px;">
+                            <span style="white-space: nowrap;">สุ่มตรวจทุกๆ 20 นาที หรือ</span>
+                            <div contenteditable="true" class="table-input"
+                                style="width: 170px; border-bottom: 1px solid #000; min-height: 18px; text-align: center;">
+                            </div>
+                        </div>
+
+                        <div
+                            style="margin-top: 6px; display: flex; align-items: center; font-size: 13px; font-weight: 500; width: 310px;">
+                            <div style="flex: 1;"></div>
+                            <span style="white-space: nowrap; margin-right: 6px;">/ ผ่าน</span>
+                            <div contenteditable="true" class="table-input"
+                                style="width: 170px; border-bottom: 1px solid #000; min-height: 18px; text-align: center;">
+                            </div>
+                        </div>
+
+                        <div
+                            style="margin-top: 6px; display: flex; align-items: center; font-size: 13px; font-weight: 500; width: 310px;">
+                            <div style="flex: 1;"></div>
+                            <span style="white-space: nowrap; margin-right: 6px;">X ไม่ผ่าน</span>
+                            <div contenteditable="true" class="table-input"
+                                style="width: 170px; border-bottom: 1px solid #000; min-height: 18px; text-align: center;">
+                            </div>
+                        </div>
+                    </td>
+
+                    <td style="border: none; width: auto;"></td>
+
+                    <td style="width: 350px; border: none; padding: 0; text-align: right; vertical-align: top;">
+                        <div
+                            style="width: 100%; border: 1px solid #000; padding: 8px; min-height: 110px; text-align: left; background-color: #fff;">
+                            <span
+                                style="font-weight: bold; display: block; margin-bottom: 4px; font-size: 13px;">หมายเหตุ
+                                :</span>
+                            <div contenteditable="true" class="table-input"
+                                style="width: 100%; min-height: 75px; outline: none; border: none; text-align: left; font-size: 12px;">
+                            </div>
+                        </div>
+
+                        <div
+                            style="margin-top: 12px; font-weight: bold; font-size: 12px; font-family: sans-serif; color: #000;">
+                            FORM-QAD-52 ฉบับที่ 2 05 ก.ย. 2568
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <!-- ==========================================================
+        END OF PAGE 1
+        ========================================================== -->
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

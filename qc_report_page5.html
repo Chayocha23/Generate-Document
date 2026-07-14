@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานผลการตรวจสอบผลิตภัณฑ์ขั้นสุดท้าย (FQC)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* บังคับการตั้งค่าหน้ากระดาษสำหรับเบราว์เซอร์ขณะพิมพ์ */
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ccc;
+            font-family: 'Sarabun', sans-serif;
+        }
+        
+        /* สไตล์หลักของหน้ากระดาษ A4 แนวนอนแต่ละแผ่น */
+        .a4-landscape {
+            width: 297mm;
+            height: 210mm;
+            background: #fff;
+            margin: 15px auto;
+            padding: 6mm 8mm;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always; /* บังคับแบ่งหน้าพิมพ์ */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .fqc-container {
+            color: #000;
+            font-size: 10px;
+            line-height: 1.2;
+        }
+
+        /* หัวเรื่องการตรวจสอบเพิ่มเติมกลางหน้า (หน้า 2) */
+        .page-title-center {
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* ส่วนหัวรายงาน (หน้า 1) */
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 6px;
+        }
+        .header-table td {
+            border: 1px solid #000;
+            vertical-align: middle; 
+            padding: 3px 6px;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; 
+            gap: 10px;
+            width: 100%;
+        }
+        .logo-img {
+            height: 36px;
+        }
+        .company-title {
+            font-size: 10.5px;
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        .sub-form-title {
+            font-size: 7.5px; 
+            color: #333; 
+            border-top: 0.5px solid #000; 
+            margin-top: 2px;     
+            padding-top: 2px;    
+            margin-bottom: 2px;  
+            text-align: left;
+        }
+        
+        .form-title {
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 1.3; 
+            text-align: left; 
+        }
+
+        /* จัดระเบียบแถวที่มีเส้นไข่ปลา */
+        .form-row {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 3px;
+        }
+        .form-row:last-child {
+            margin-bottom: 0;
+        }
+        .form-label {
+            white-space: nowrap;
+            padding-right: 4px;
+            font-size: 9px;
+        }
+        
+        /* สไตล์ช่องพิมพ์บนเส้นประคงที่ (ข้อความลอยทับด้านบน) */
+        .dots-fill {
+            flex: 1;
+            background-image: linear-gradient(to right, #000 35%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 4px 1px;
+            background-repeat: repeat-x;
+            min-height: 16px;
+            padding-left: 6px;
+            padding-right: 6px;
+            font-size: 9.5px;
+            outline: none;
+            word-break: break-all;
+            display: inline-block;
+        }
+
+        /* ตารางตรวจสอบหลัก (หน้า 1) */
+        .main-inspect-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-bottom: 6px;
+        }
+        .main-inspect-table th, 
+        .main-inspect-table td {
+            border: 1px solid #000;
+            text-align: center;
+            vertical-align: middle;
+            padding: 2px 1px;
+            font-size: 8px;
+        }
+        .main-inspect-table th {
+            font-weight: bold;
+        }
+
+        /* หัวตารางแนวตั้ง (หน้า 1) */
+        .v-th {
+            height: 75px;
+            position: relative;
+            padding: 0 !important;
+        }
+        .v-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            display: inline-block;
+            text-align: left;
+            font-size: 8px;
+            font-weight: normal;
+        }
+
+        /* ช่องเส้นทแยงมุมคั่นหัวตาราง */
+        .diagonal-th {
+            position: relative;
+            background: linear-gradient(to top right, transparent calc(50% - 0.5px), #000 calc(50% - 0.5px), #000 calc(50% + 0.5px), transparent calc(50% + 0.5px));
+            padding: 0 !important;
+            width: 90px;
+        }
+        .diag-top {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            text-align: right;
+            font-size: 8px;
+        }
+        .diag-bottom {
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            text-align: left;
+            font-size: 8px;
+        }
+
+        .prod-cell {
+            cursor: pointer;
+            user-select: none;
+            font-weight: bold;
+            font-size: 9.5px;
+        }
+
+        .result-box-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            width: 100%;
+            padding-right: 2px;
+        }
+        .square-box {
+            width: 11px;
+            height: 11px;
+            border: 1px solid #000;
+            background-color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        /* เส้นไข่ปลาภายในช่องบันทึกตารางหลัก */
+        .dots-inline {
+            flex: 1;
+            background-image: linear-gradient(to right, #000 35%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 4px 1px;
+            background-repeat: repeat-x;
+            height: 14px;
+            margin-left: 4px;
+            outline: none;
+            text-align: left;
+            padding-left: 4px;
+            font-size: 8px;
+        }
+
+        /* โซนบล็อกข้อมูลและลายเซ็นต์ด้านล่าง (หน้า 1 เท่านั้น) */
+        .bottom-flex-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        /* ตารางกรณี REJECT */
+        .reject-summary-table {
+            width: 35%;
+            border-collapse: collapse;
+        }
+        .reject-summary-table th,
+        .reject-summary-table td {
+            border: 1px solid #000;
+            text-align: center;
+            padding: 2px;
+            font-size: 8px;
+        }
+        .reject-summary-table th {
+            font-weight: bold;
+            background-color: #fff;
+        }
+
+        /* บล็อกกลางด้านล่าง: บรรจุภัณฑ์ และ ขนาด */
+        .center-block {
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .border-card {
+            border: 1px solid #000;
+            padding: 4px 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-title {
+            font-weight: bold;
+            font-size: 8.5px;
+            margin-bottom: 2px;
+        }
+        .card-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 1px;
+        }
+        .card-item {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            font-size: 8px;
+        }
+
+        /* บล็อกขวาด้านล่าง: ลายเซ็นผู้อนุมัติ */
+        .right-sig-block {
+            width: 28%;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sig-card {
+            border: 1px solid #000;
+            padding: 4px 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* ช่องหมายเหตุล่างสุด 3 บรรทัด (หน้า 1) */
+        .bottom-notes-section {
+            width: 60%;
+            margin-top: 2px;
+            font-size: 8.5px;
+        }
+        .note-line {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 4px;
+        }
+        .note-label {
+            white-space: nowrap;
+            padding-right: 4px;
+        }
+        .note-dots {
+            flex: 1;
+            background-image: linear-gradient(to right, #000 35%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 4px 1px;
+            background-repeat: repeat-x;
+            min-height: 15px;
+            outline: none;
+            padding-left: 6px;
+            display: inline-block;
+        }
+
+        /* โซนตารางกรีดสุ่มตรวจ 4 บล็อกแนวนอน (หน้า 2) */
+        .grid-layout-container {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            margin-top: 2px;
+        }
+        .grid-column-box {
+            flex: 1;
+        }
+        .fqc-grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .fqc-grid-table th,
+        .fqc-grid-table td {
+            border: 1px solid #000;
+            text-align: center;
+            vertical-align: middle;
+            padding: 2px 1px;
+        }
+        .fqc-grid-table th {
+            font-weight: bold;
+            font-size: 9px; /* ⚠ เพิ่มขนาดฟอนต์หัวข้อของตารางสุ่มตรวจแผ่น 2 */
+            background-color: #fafafa;
+        }
+        .fqc-grid-table td {
+            font-size: 9px; /* ⚠ เพิ่มขนาดตัวเลขลำดับสุ่มตรวจและอินพุต */
+            height: 20px;   /* ⚠ ขยายความสูงของแถวเพิ่มขึ้นเต็มที่เพื่อให้ตารางถมพื้นที่ว่างขยายใหญ่เต็มหน้า A4 */
+        }
+        .table-input {
+            width: 100%;
+            height: 100%;
+            outline: none;
+            font-size: 9.5px;
+            text-align: center;
+        }
+        .size-header-container {
+            font-size: 8px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: flex-end;
+            justify-content: center;
+            width: 100%;
+            gap: 1px;
+            height: 13px;
+        }
+
+        /* ข้อมูลท้ายกระดาษประจำแผ่น */
+        .footer-info {
+            position: absolute;
+            bottom: 4mm;
+            left: 8mm;
+            right: 8mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8.5px;
+            font-weight: bold;
+        }
+
+        /* ลบเอฟเฟกต์เงาและพื้นสีเทาออกเมื่อเข้าสู่คำสั่ง Print */
+        @media print {
+            body {
+                margin: 0;
+                background: white;
+            }
+            .a4-landscape {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="a4-landscape page-1">
+        <div class="fqc-container">
+            
+            <table class="header-table">
+                <colgroup>
+                    <col style="width: 32%;">
+                    <col style="width: 41%;">
+                    <col style="width: 27%;">
+                </colgroup>
+                <tr>
+                    <td>
+                        <div class="logo-section">
+                            <img src="Logo Physic.png" alt="Logo" class="logo-img">
+                            <div>
+                                <div class="company-title">ห้างหุ้นส่วนจำกัด สำนักพิมพ์ฟิสิกส์เซ็นเตอร์</div>
+                                <div class="sub-form-title">รายงานผลการตรวจสอบผลิตภัณฑ์ขั้นสุดท้าย (FQC)</div>
+                                <div class="form-title">รายงานผลการตรวจสอบ<br>ผลิตภัณฑ์ขั้นสุดท้าย (FQC)</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-size: 8.5px; vertical-align: top;">
+                        <div class="form-row">
+                            <span class="form-label">ชื่องาน</span>
+                            <span class="dots-fill navigate-input" contenteditable="true" data-nav-right="form-fqc-no" data-nav-down="form-customer"></span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">ชื่อลูกค้า</span>
+                            <span class="dots-fill navigate-input" contenteditable="true" style="flex: 2;" data-nav-right="form-qty" data-nav-up="form-job-name" data-nav-down="form-order-id"></span>
+                            <span class="form-label" style="padding-left: 8px;">จำนวน</span>
+                            <span class="dots-fill navigate-input" contenteditable="true" data-nav-right="form-inspector" data-nav-left="form-customer" data-nav-up="form-job-name" data-nav-down="form-sample-qty"></span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label">เลขที่ใบสั่งผลิต</span>
+                            <span class="dots-fill navigate-input" contenteditable="true" data-nav-right="form-sample-qty" data-nav-up="form-customer" data-nav-down="inspect-accept-0"></span>
+                            <span class="form-label" style="padding-left: 8px;">จำนวนสุ่มตรวจ</span>
+                            <span class="dots-fill navigate-input" contenteditable="true" data-nav-right="form-date" data-nav-left="form-order-id" data-nav-up="form-qty" data-nav-down="inspect-reject-0"></span>
+                        </div>
+                        <div style="text-align: right; font-size: 8px; font-weight: bold; margin-top: 2px;">
+                            (AQL 0.40% NORMAL INSPECTION)
+                        </div>
+                    </td>
+                    <td style="font-size: 8.5px; vertical-align: top;">
+                        <div class="form-row"><span class="form-label">FQC NO.</span><span id="form-fqc-no" class="dots-fill navigate-input" contenteditable="true" data-nav-left="form-job-name" data-nav-down="form-inspector"></span></div>
+                        <div class="form-row"><span class="form-label">ผู้ตรวจสอบ</span><span id="form-inspector" class="dots-fill navigate-input" contenteditable="true" data-nav-left="form-qty" data-nav-up="form-fqc-no" data-nav-down="form-date"></span></div>
+                        <div class="form-row"><span class="form-label">วันที่ตรวจสอบ</span><span id="form-date" class="dots-fill navigate-input" contenteditable="true" data-nav-left="form-sample-qty" data-nav-up="form-inspector" data-nav-down="form-lot"></span></div>
+                        <div class="form-row"><span class="form-label">LOT No.</span><span id="form-lot" class="dots-fill navigate-input" contenteditable="true" data-nav-up="form-date" data-nav-down="inspect-reject-0"></span></div>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="main-inspect-table">
+                <colgroup>
+                    <col style="width: 105px;"> 
+                    <col span="22" style="width: 16px;">
+                    <col style="width: 130px;">
+                    <col style="width: 95px;">  
+                    <col style="width: 50px;">
+                    <col style="width: 90px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="diagonal-th">
+                            <div class="diag-top">ประเภท<br>ผลิตภัณฑ์</div>
+                            <div class="diag-bottom">รายการ<br>ตรวจสอบ</div>
+                        </th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ปกอ่อนเย็บลวด</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ปกอ่อนไส้กาว</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ปกแข็งเย็บกี่</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">เจาะรูร้อยห่วง</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ใบปลิว</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">โปสเตอร์</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">กล่องหุ้มจั่วปัง</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">แผ่นพับ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">งานไดคัท+กระปุก</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">การ์ดต่างๆ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ปฏิทินตั้งโต๊ะ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ปฏิทินแขวน</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">เชือกช้อปปิ้งนก</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">กล่องกระดาษม้วน</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ซองกระดาษ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ถาดกระดาษ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ถุงกระดาษ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">กระดาษห่อของ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">เชือกกระดาษ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">จาน/ชามกระดาษ</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ถาดขึ้นรูป</div></th>
+                        <th rowspan="2" class="v-th"><div class="v-text">ฝาพลาสติก</div></th>
+                        
+                        <th rowspan="2">มาตรฐานการตรวจสอบ</th>
+                        <th rowspan="2">วิธีการตรวจ</th>
+                        <th colspan="2" style="padding: 1px 0;">ผลการตรวจ</th>
+                    </tr>
+                    <tr>
+                        <th style="height: 18px;">ACCEPT</th>
+                        <th>REJECT / บันทึกผล<br>/ จำนวนเสีย</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        const rows = [
+                            { name: "การพับถูกต้อง", checked: [], std: "พับแล้วไม่สลับหน้า", method: "ตัวอย่าง+สายตา" },
+                            { name: "การเรียงหน้าถูกต้อง", checked: [], std: "เลขหน้าเรียงจากน้อยไปมาก", method: "ตัวอย่าง+สายตา" },
+                            { name: "การเย็บลวดถูกต้อง", checked: [], std: "มีลวดเย็บ 2 ลวด", method: "ตัวอย่าง+สายตา" },
+                            { name: "การไสกาวไม่เลอะเทอะ", checked: [], std: "กาวไม่เลอะเทอะสกปรก", method: "ตัวอย่าง+สายตา" },
+                            { name: "การตัดขอบเรียบ", checked: [], std: "ตัดแล้วขอบเรียบ", method: "ตัวอย่าง+สายตา" },
+                            { name: "ปกไม่โป่งงอยับ", checked: [], std: "ไม่ฉีกขาด,ยับ", method: "ตัวอย่าง+สายตา" },
+                            { name: "ร้อยห่วง / เชือก", checked: [], std: "รูเจาะแบบ ⬜ หรือ ⚪", method: "ตัวอย่าง+สายตา" },
+                            { name: "ความสะอาด", checked: [], std: "สะอาดไม่มีคราบสกปรก", method: "ตัวอย่าง+สายตา" },
+                            { name: "ตัวอักษรครบถ้วน", checked: [], std: "เขียนบันทึกทุกช่อง", method: "ตัวอย่าง+สายตา" },
+                            { name: "ไม่ฉีกขาดทะลุ,เปียก,ไม่ยับ", checked: [], std: "ไม่ฉีกขาด", method: "ตัวอย่าง+สายตา" },
+                            { name: "กาวไม่เลอะเทอะ", checked: [], std: "อื่นๆ", method: "ตัวอย่าง+สายตา" },
+                            { name: "การซีนงานบนพาเลท", checked: [], std: "ซีนพลาสติกเรียบร้อย", method: "ตัวอย่าง+สายตา" },
+                            { name: "เชือกม้วนกลม", checked: [], std: "กลอเชือกเป็นม้วนกลม/เรียบ", method: "ตัวอย่าง+สายตา" },
+                            { name: "ฉลากและเครื่องหมาย", checked: [], std: "ไม่ฉีกขาด/ข้อมูลครบสมบูรณ์/ประทับตรา", method: "ตัวอย่าง+สายตา" },
+                            { name: "การบรรจุ", checked: [], std: "บรรจุเรียบร้อย", method: "ตัวอย่าง+สายตา" },
+                            { name: "ขนาด (กว้างxยาวxสูง)", checked: [], std: "ขนาดตรงตามใบแจ้งสถานะการผลิต", method: "ตัวอย่าง+สายตา+ไม้บรรทัด" }
+                        ];
+
+                        rows.forEach((row, rIndex) => {
+                            document.write(`<tr>`);
+                            document.write(`<td style="text-align: left; padding-left: 4px; font-weight: bold;">${row.name}</td>`);
+                            
+                            for(let i=1; i<=22; i++) {
+                                let isMarked = row.checked.includes(i) ? '✓' : '';
+                                document.write(`<td class="prod-cell" onclick="toggleText(this)">${isMarked}</td>`);
+                            }
+                            
+                            document.write(`<td style="text-align: left; padding-left: 3px;">${row.std}</td>`);
+                            document.write(`<td>${row.method}</td>`);
+                            
+                            document.write(`<td>
+                                <div class="result-box-container">
+                                    <div class="square-box type-accept" onclick="toggleBox(this)"></div>
+                                    <span id="inspect-accept-${rIndex}" class="dots-inline navigate-input" contenteditable="true"></span>
+                                </div>
+                            </td>`);
+                            
+                            document.write(`<td>
+                                <div class="result-box-container">
+                                    <div class="square-box type-reject" onclick="toggleBox(this)"></div>
+                                    <span id="inspect-reject-${rIndex}" class="dots-inline navigate-input" contenteditable="true" style="flex: 2;"></span>
+                                </div>
+                            </td>`);
+                            document.write(`</tr>`);
+                        });
+                    </script>
+
+                    <tr>
+                        <td colspan="23" style="border: none; background: transparent;"></td>
+                        <td style="border: none; background: transparent;"></td> 
+                        <td style="font-weight: bold; vertical-align: middle; border: none; text-align: right; padding-right: 15px;">ผลสรุป</td>
+                        <td>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                <div class="square-box type-accept" onclick="toggleBox(this)"></div>
+                                <span style="font-weight: bold; font-size: 8px;">ACCEPT</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                <div class="square-box type-reject" onclick="toggleBox(this)"></div>
+                                <span style="font-weight: bold; font-size: 8px;">REJECT</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="bottom-flex-container">
+                
+                <table class="reject-summary-table">
+                    <thead>
+                        <tr>
+                            <th colspan="5" style="padding: 3px 2px; font-size: 8.5px;">กรณี REJECT ฝ่ายประกันคุณภาพบันทึกผลสรุปตัวเลข</th>
+                        </tr>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="width: 10%;">ครั้ง</th>
+                            <th style="width: 22.5%;">ยอดรับเข้า</th>
+                            <th style="width: 22.5%;">ยอดงานเสีย</th>
+                            <th style="width: 22.5%;">ยอดคงเหลือ</th>
+                            <th>หมายเหตุ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <script>
+                            for(let i=1; i<=5; i++) {
+                                document.write(`<tr>
+                                    <td id="rej-turn-${i}" class="navigate-input" contenteditable="true" style="font-weight: bold;" data-nav-right="rej-in-${i}"></td>
+                                    <td id="rej-in-${i}" class="navigate-input" contenteditable="true" data-nav-right="rej-waste-${i}" data-nav-left="rej-turn-${i}"></td>
+                                    <td id="rej-waste-${i}" class="navigate-input" contenteditable="true" data-nav-right="rej-remain-${i}" data-nav-left="rej-in-${i}"></td>
+                                    <td id="rej-remain-${i}" class="navigate-input" contenteditable="true" data-nav-right="rej-note-${i}" data-nav-left="rej-waste-${i}"></td>
+                                    <td id="rej-note-${i}" class="navigate-input" contenteditable="true" data-nav-right="pkg-acc" data-nav-left="rej-remain-${i}"></td>
+                                </tr>`);
+                            }
+                        </script>
+                    </tbody>
+                </table>
+
+                <div class="center-block">
+                    <div class="border-card wrapper-block-p1">
+                        <span class="card-title">ผลการตรวจสอบการ PACKING และบรรจุ</span>
+                        <div class="card-row">
+                            <div class="card-item">
+                                <div class="square-box type-accept" onclick="toggleBox(this)"></div>
+                                <span style="padding-left: 4px; padding-right: 2px;">ACCEPT</span>
+                                <span class="dots-inline navigate-input" contenteditable="true" style="width: 70px;"></span>
+                            </div>
+                            <div class="card-item">
+                                <div class="square-box type-reject" onclick="toggleBox(this)"></div>
+                                <span style="padding-left: 4px; padding-right: 2px;">REJECT</span>
+                                <span class="dots-inline navigate-input" contenteditable="true" style="width: 70px;"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-card wrapper-block-p1">
+                        <span class="card-title">ผลการตรวจสอบขนาดโดยเทียบจากตัวอย่าง / ขนาดในใบสั่งผลิต ค่า ± 1 มม.</span>
+                        <div class="card-row">
+                            <div class="card-item">
+                                <div class="square-box type-accept" onclick="toggleBox(this)"></div>
+                                <span style="padding-left: 4px; padding-right: 2px;">ACCEPT</span>
+                                <span class="dots-inline navigate-input" contenteditable="true" style="width: 70px;"></span>
+                            </div>
+                            <div class="card-item">
+                                <div class="square-box type-reject" onclick="toggleBox(this)"></div>
+                                <span style="padding-left: 4px; padding-right: 2px;">REJECT</span>
+                                <span class="dots-inline navigate-input" contenteditable="true" style="width: 70px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-sig-block">
+                    <div class="sig-card">
+                        <div class="form-row">
+                            <span class="form-label" style="font-size: 8px;">ฝ่ายผลิตเซ็นรับทราบผลการตรวจ</span>
+                            <span class="dots-fill navigate-input" contenteditable="true"></span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label" style="font-size: 8px;">วันที่รับทราบ</span>
+                            <span class="dots-fill navigate-input" contenteditable="true" style="text-align: center;"></span>
+                        </div>
+                    </div>
+
+                    <div class="sig-card">
+                        <div class="form-row">
+                            <span class="form-label" style="font-size: 8px;">ผู้จัดการฝ่ายประกันคุณภาพ</span>
+                            <span class="dots-fill navigate-input" contenteditable="true"></span>
+                        </div>
+                        <div class="form-row">
+                            <span class="form-label" style="font-size: 8px;">วันที่รับทราบ</span>
+                            <span class="dots-fill navigate-input" contenteditable="true" style="text-align: center;"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bottom-notes-section">
+                <div class="note-line">
+                    <span class="note-label">หมายเหตุ</span>
+                    <span class="note-dots navigate-input" contenteditable="true"></span>
+                </div>
+                <div class="note-line">
+                    <span class="note-dots navigate-input" contenteditable="true" style="margin-left: 40px;"></span>
+                </div>
+                <div class="note-line">
+                    <span class="note-dots navigate-input" contenteditable="true" style="margin-left: 40px;"></span>
+                </div>
+            </div>
+
+            <div class="footer-info">
+                <div>หน้า 1/3</div>
+                <div>FORM-QAD-14 ฉบับที่ 14 05 มี.ค. 2569</div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <main class="a4-landscape page-2">
+        <div class="fqc-container">
+            
+            <div class="page-title-center">รายงานผลการตรวจสอบผลิตภัณฑ์ขั้นสุดท้าย (FQC) (เพิ่มเติม)</div>
+
+            <div class="grid-layout-container">
+                <script>
+                    function renderFqcGridColumn(startNo, endNo) {
+                        document.write(`
+                            <div class="grid-column-box">
+                                <table class="fqc-grid-table">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" style="width: 30px; font-size: 8px;">ครั้งที่</th>
+                                            <th colspan="2" style="font-size: 8px; padding: 2px 0;">รายการตรวจสอบ</th>
+                                            <th colspan="2" style="font-size: 8px; padding: 2px 0; line-height: 1.1;">
+                                                <span style="display: block; margin-bottom: 1px;">ตรวจสอบขนาด</span>
+                                                <div class="size-header-container">
+                                                    <span>size</span>
+                                                    <div style="position: relative; display: inline-block; width: 34px; overflow: hidden;">
+                                                        <div style="position: absolute; left: 0; bottom: 0; width: 100%; color: #000; pointer-events: none;">.......</div>
+                                                        <div contenteditable="true" class="navigate-input" id="grid-size-val-${startNo}" style="position: relative; z-index: 2; outline: none; background: transparent; width: 100%; text-align: center; font-size: 8px;"></div>
+                                                    </div>
+                                                    <span>±</span>
+                                                    <div style="position: relative; display: inline-block; width: 20px; overflow: hidden;">
+                                                        <div style="position: absolute; left: 0; bottom: 0; width: 100%; color: #000; pointer-events: none;">....</div>
+                                                        <div contenteditable="true" class="navigate-input" id="grid-size-limit-${startNo}" style="position: relative; z-index: 2; outline: none; background: transparent; width: 100%; text-align: center; font-size: 8px;"></div>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th rowspan="2" style="width: 42px; font-size: 8px;">หมายเหตุ</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="height: 14px; width: 18px; font-size: 8px;">ผ่าน</th>
+                                            <th style="width: 18px; font-size: 8px;">ไม่ผ่าน</th>
+                                            <th style="width: 18px; font-size: 8px;">ผ่าน</th>
+                                            <th style="width: 18px; font-size: 8px;">ไม่ผ่าน</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                        `);
+                        
+                        for (let i = startNo; i <= endNo; i++) {
+                            // คำนวณความสัมพันธ์ปุ่มลูกศร ซ้าย-ขวา ข้ามบล็อกย่อยอัตโนมัติ
+                            let navLeftId = i > 32 ? `grid-remark-${i - 32}` : '';
+                            
+                            document.write(`
+                                <tr>
+                                    <td style="font-weight: bold; background: #fafafa; font-size: 8px;">${i}</td>
+                                    <td><div contenteditable="true" class="table-input navigate-input" id="grid-chk-pass-${i}" data-nav-right="grid-chk-fail-${i}" data-nav-left="${navLeftId}"></div></td>
+                                    <td><div contenteditable="true" class="table-input navigate-input" id="grid-chk-fail-${i}" data-nav-right="grid-sz-pass-${i}" data-nav-left="grid-chk-pass-${i}"></div></td>
+                                    <td><div contenteditable="true" class="table-input navigate-input" id="grid-sz-pass-${i}" data-nav-right="grid-sz-fail-${i}" data-nav-left="grid-chk-fail-${i}"></div></td>
+                                    <td><div contenteditable="true" class="table-input navigate-input" id="grid-sz-fail-${i}" data-nav-right="grid-remark-${i}" data-nav-left="grid-sz-pass-${i}"></div></td>
+                                    <td><div contenteditable="true" class="table-input navigate-input" id="grid-remark-${i}" style="text-align: left; padding-left: 2px;" ${i <= 96 ? `data-nav-right="grid-chk-pass-${i + 32}"` : ''} data-nav-left="grid-sz-fail-${i}"></div></td>
+                                </tr>
+                            `);
+                        }
+                        
+                        document.write(`</tbody></table></div>`);
+                    }
+
+                    renderFqcGridColumn(1, 32);
+                    renderFqcGridColumn(33, 64);
+                    renderFqcGridColumn(65, 96);
+                    renderFqcGridColumn(97, 128);
+                </script>
+            </div>
+
+            <div class="footer-info">
+                <div>หน้า 2/3</div>
+                <div>FORM-QAD-14 ฉบับที่ 14 05 มี.ค. 2569</div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <script>
+        document.querySelector('.header-table .form-row:nth-child(1) .dots-fill').id = 'form-job-name';
+
+        const centerBlockInputsP1 = document.querySelectorAll('.page-1 .center-block .dots-inline');
+        if(centerBlockInputsP1.length >= 4) {
+            centerBlockInputsP1[0].id = 'pkg-acc';     centerBlockInputsP1[0].setAttribute('data-nav-right', 'pkg-rej');     
+            centerBlockInputsP1[1].id = 'pkg-rej';     centerBlockInputsP1[1].setAttribute('data-nav-right', 'size-acc');    centerBlockInputsP1[1].setAttribute('data-nav-left', 'pkg-acc');
+            centerBlockInputsP1[2].id = 'size-acc';    centerBlockInputsP1[2].setAttribute('data-nav-right', 'size-rej');    centerBlockInputsP1[2].setAttribute('data-nav-left', 'pkg-rej');
+            centerBlockInputsP1[3].id = 'size-rej';    centerBlockInputsP1[3].setAttribute('data-nav-right', 'sig-prod');    centerBlockInputsP1[3].setAttribute('data-nav-left', 'size-acc');
+        }
+
+        const sigBlockInputsP1 = document.querySelectorAll('.page-1 .right-sig-block .dots-fill');
+        if(sigBlockInputsP1.length >= 4) {
+            sigBlockInputsP1[0].id = 'sig-prod';       sigBlockInputsP1[0].setAttribute('data-nav-right', 'sig-prod-date'); sigBlockInputsP1[0].setAttribute('data-nav-left', 'size-rej');
+            sigBlockInputsP1[1].id = 'sig-prod-date';  sigBlockInputsP1[1].setAttribute('data-nav-right', 'sig-qa');        sigBlockInputsP1[1].setAttribute('data-nav-left', 'sig-prod');
+            sigBlockInputsP1[2].id = 'sig-qa';         sigBlockInputsP1[2].setAttribute('data-nav-right', 'sig-qa-date');   sigBlockInputsP1[2].setAttribute('data-nav-left', 'sig-prod-date');
+            sigBlockInputsP1[3].id = 'sig-qa-date';    sigBlockInputsP1[3].setAttribute('data-nav-right', 'bottom-note-0'); sigBlockInputsP1[3].setAttribute('data-nav-left', 'sig-qa');
+        }
+
+        const noteBlockInputsP1 = document.querySelectorAll('.page-1 .bottom-notes-section .note-dots');
+        noteBlockInputsP1.forEach((ni, idx) => {
+            ni.id = `bottom-note-${idx}`;
+            if(idx === 0) ni.setAttribute('data-nav-left', 'sig-qa-date');
+        });
+
+        function toggleText(cell) {
+            cell.textContent = cell.textContent.trim() === '✓' ? '' : '✓';
+        }
+
+        function toggleBox(box) {
+            const isAccept = box.classList.contains('type-accept');
+            const parent = box.closest('tr') || box.closest('.card-row') || box.closest('td');
+            
+            if (box.textContent.trim() === '✓') {
+                box.textContent = '';
+            } else {
+                box.textContent = '✓';
+                if (isAccept) {
+                    const rejectBox = parent.querySelector('.type-reject');
+                    if (rejectBox) rejectBox.textContent = '';
+                } else {
+                    const acceptBox = parent.querySelector('.type-accept');
+                    if (acceptBox) acceptBox.textContent = '';
+                }
+            }
+        }
+
+        // =================💻 ระบบควบคุมคีย์บอร์ดนำทางอัจฉริยะ 4 ทิศทาง 💻=================
+        document.addEventListener('keydown', function(e) {
+            const inputs = Array.from(document.querySelectorAll('.navigate-input'));
+            const active = document.activeElement;
+            
+            if (!inputs.includes(active)) return;
+            
+            const index = inputs.indexOf(active);
+            
+            const targetLeft = active.getAttribute('data-nav-left');
+            const targetRight = active.getAttribute('data-nav-right');
+            const targetUp = active.getAttribute('data-nav-up');
+            const targetDown = active.getAttribute('data-nav-down');
+
+            if (e.key === 'ArrowRight') {
+                if (targetRight && document.getElementById(targetRight)) {
+                    e.preventDefault();
+                    document.getElementById(targetRight).focus();
+                } else if (!active.id || !active.id.startsWith('grid-remark-')) {
+                    if (index + 1 < inputs.length) inputs[index + 1].focus();
+                }
+            } 
+            else if (e.key === 'ArrowLeft') {
+                if (targetLeft && document.getElementById(targetLeft)) {
+                    e.preventDefault();
+                    document.getElementById(targetLeft).focus();
+                } else if (!active.id || !active.id.startsWith('grid-chk-pass-')) {
+                    if (index - 1 >= 0) inputs[index - 1].focus();
+                }
+            } 
+            else if (e.key === 'ArrowDown' || e.key === 'Enter') {
+                e.preventDefault();
+                if (targetDown && document.getElementById(targetDown)) {
+                    document.getElementById(targetDown).focus();
+                } else {
+                    let nextInput = null;
+                    if (active.id && active.id.startsWith('inspect-accept-')) {
+                        let curIdx = parseInt(active.id.split('-')[2]);
+                        nextInput = document.getElementById(`inspect-accept-${curIdx + 1}`);
+                    } else if (active.id && active.id.startsWith('inspect-reject-')) {
+                        let curIdx = parseInt(active.id.split('-')[2]);
+                        nextInput = document.getElementById(`inspect-reject-${curIdx + 1}`);
+                    } else if (active.id && active.id.startsWith('rej-')) {
+                        let parts = active.id.split('-');
+                        let curIdx = parseInt(parts[2]);
+                        nextInput = document.getElementById(`rej-${parts[1]}-${curIdx + 1}`);
+                    } else if (active.id && active.id.startsWith('bottom-note-')) {
+                        let curIdx = parseInt(active.id.split('-')[2]);
+                        nextInput = document.getElementById(`bottom-note-${curIdx + 1}`);
+                    } else if (active.id && active.id.startsWith('grid-')) {
+                        let parts = active.id.split('-');
+                        let currentNo = parseInt(parts[parts.length - 1]);
+                        parts[parts.length - 1] = currentNo + 1;
+                        nextInput = document.getElementById(parts.join('-'));
+                    }
+                    
+                    if (nextInput) {
+                        nextInput.focus();
+                    } else if (index + 1 < inputs.length) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            } 
+            else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (targetUp && document.getElementById(targetUp)) {
+                    document.getElementById(targetUp).focus();
+                } else {
+                    let prevInput = null;
+                    if (active.id && active.id.startsWith('inspect-accept-')) {
+                        let curIdx = parseInt(active.id.split('-')[2]);
+                        prevInput = document.getElementById(`inspect-accept-${curIdx - 1}`) || document.getElementById('form-order-id');
+                    } else if (active.id && active.id.startsWith('inspect-reject-')) {
+                        let curIdx = parseInt(active.id.split('-')[2]);
+                        prevInput = document.getElementById(`inspect-reject-${curIdx - 1}`) || document.getElementById('form-sample-qty');
+                    } else if (active.id && active.id.startsWith('rej-')) {
+                        let parts = active.id.split('-');
+                        let curIdx = parseInt(parts[2]);
+                        prevInput = document.getElementById(`rej-${parts[1]}-${curIdx - 1}`);
+                    } else if (active.id && active.id.startsWith('bottom-note-')) {
+                        let curIdx = parseInt(active.id.split('-')[2]);
+                        prevInput = document.getElementById(`bottom-note-${curIdx - 1}`) || document.getElementById('sig-qa-date');
+                    } else if (active.id && active.id.startsWith('grid-')) {
+                        let parts = active.id.split('-');
+                        let currentNo = parseInt(parts[parts.length - 1]);
+                        parts[parts.length - 1] = currentNo - 1;
+                        prevInput = document.getElementById(parts.join('-'));
+                    }
+                    
+                    if (prevInput) {
+                        prevInput.focus();
+                    } else if (index - 1 >= 0) {
+                        inputs[index - 1].focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

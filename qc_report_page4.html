@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงานตรวจสอบผลิตภัณฑ์ QC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="doc-shell">
+        <div class="a4-page" id="page-4"
+            style="page-break-before: always; font-family: 'Sarabun', sans-serif; box-sizing: border-box; padding: 4mm 12mm 15mm 12mm; position: relative;">
+            
+            <div class="page-masthead" style="margin-bottom: 12px;">
+                <div class="masthead-upper" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center;">
+                        <img src="Logo Physic.png" alt="Physics Center Logo" class="logo-placeholder" style="height: 28px; margin-right: 8px;">
+                        <div class="company-title" style="font-size: 13px; font-weight: bold; color: #000; font-family: 'Sarabun', sans-serif;">
+                            ห้างหุ้นส่วนจำกัด สำนักพิมพ์ฟิสิกส์เซ็นเตอร์
+                        </div>
+                    </div>
+                    <div style="margin-left: auto; font-size: 11px; font-weight: bold; font-family: sans-serif; color: #000; display: flex; align-items: center;">
+                        <span>หน้า&nbsp;</span>
+                        <div contenteditable="true" style="min-width: 15px; text-align: center; outline: none; border-bottom: 1px dashed #ccc; display: inline-block;"></div>
+                        <span>&nbsp;/&nbsp;</span>
+                        <div contenteditable="true" style="min-width: 15px; text-align: center; outline: none; border-bottom: 1px dashed #ccc; display: inline-block;"></div>
+                    </div>
+                </div>
+                <div class="masthead-divider" style="height: 1px; background-color: #000; margin-top: 3px; margin-bottom: 3px;"></div>
+                
+                <div style="font-size: 11px; font-weight: 500; font-family: sans-serif; color: #000; margin-bottom: 2px;">
+                    รายงานการตรวจสอบผลิตภัณฑ์ในกระบวนการผลิต-เครื่องทำถุงกระดาษ
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 15px;">
+                <h2 style="font-size: 16px; font-weight: bold; margin: 0; color: #000; font-family: sans-serif;">
+                    แบบบันทึกการตรวจสอบการรับน้ำหนักของถุงกระดาษ
+                </h2>
+            </div>
+
+            <div style="width: 100%; margin-bottom: 12px; font-size: 11px; color: #000;">
+                <div style="display: flex; width: 100%; align-items: center; margin-bottom: 6px;">
+                    <div style="display: flex; width: 50%; align-items: center; padding-right: 15px; box-sizing: border-box;">
+                        <span style="white-space: nowrap; font-weight: 500;">ชื่องาน :</span>
+                        <div contenteditable="true" class="table-input"
+                            style="flex: 1; margin-left: 5px; border-bottom: 1px solid #000; min-height: 16px; padding: 0 5px; outline: none;">
+                        </div>
+                    </div>
+                    <div style="display: flex; width: 50%; align-items: center; padding-left: 15px; box-sizing: border-box;">
+                        <span style="white-space: nowrap; font-weight: 500;">JOB. NO. :</span>
+                        <div contenteditable="true" class="table-input"
+                            style="flex: 1; margin-left: 5px; border-bottom: 1px solid #000; min-height: 16px; padding: 0 5px; outline: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; width: 100%; align-items: center;">
+                    <div style="display: flex; width: 50%; align-items: center; padding-right: 15px; box-sizing: border-box;">
+                        <span style="white-space: nowrap; font-weight: 500;">จํานวนยอดสั่งผลิต :</span>
+                        <div contenteditable="true" class="table-input"
+                            style="flex: 1; margin-left: 5px; border-bottom: 1px solid #000; min-height: 16px; padding: 0 5px; outline: none;">
+                        </div>
+                    </div>
+                    <div style="display: flex; width: 50%; align-items: center; padding-left: 15px; box-sizing: border-box;">
+                        <span style="white-space: nowrap; font-weight: 500;">จำนวนที่ต้องการตรวจสอบ :</span>
+                        <div contenteditable="true" class="table-input"
+                            style="flex: 1; margin-left: 5px; border-bottom: 1px solid #000; min-height: 16px; padding: 0 5px; text-align: center; outline: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: table; width: 100%; table-layout: fixed;">
+                <script>
+                    function generateTableHeader() {
+                        return `
+                            <tr style="background-color: #f2f2f2; text-align: center;">
+                                <th rowspan="2" style="border: 1px solid #000; width: 38px; font-weight: bold; padding: 2px 1px; font-size: 8px; white-space: nowrap;">ลำดับที่</th>
+                                <th rowspan="2" style="border: 1px solid #000; width: 58px; font-weight: bold; padding: 2px 1px; font-size: 8px; white-space: nowrap;">วันที่ตรวจสอบ</th>
+                                <th rowspan="2" style="border: 1px solid #000; width: 58px; font-weight: bold; padding: 2px 1px; font-size: 8px; white-space: nowrap;">ชื่อผู้ตรวจสอบ</th>
+                                <th colspan="2" style="border: 1px solid #000; font-weight: bold; padding: 1px; font-size: 8px; white-space: nowrap;">น้ำหนักที่ตรวจสอบ</th>
+                                <th colspan="2" style="border: 1px solid #000; font-weight: bold; padding: 1px; font-size: 8px; white-space: nowrap;">ผลการตรวจสอบ</th>
+                                <th rowspan="2" style="border: 1px solid #000; font-weight: bold; padding: 2px 1px; font-size: 8px; white-space: nowrap;">หมายเหตุ</th>
+                            </tr>
+                            <tr style="background-color: #f2f2f2; text-align: center; line-height: 1.0;">
+                                <th style="border: 1px solid #000; padding: 1px; font-size: 7.5px; font-weight: bold; width: 30px; white-space: nowrap;">1 Kg</th>
+                                <th style="border: 1px solid #000; padding: 1px; font-size: 7.5px; font-weight: bold; width: 30px; white-space: nowrap;">3 Kg</th>
+                                <th style="border: 1px solid #000; padding: 1px; font-size: 7.5px; font-weight: bold; width: 30px; white-space: nowrap;">ผ่าน</th>
+                                <th style="border: 1px solid #000; padding: 1px; font-size: 7.5px; font-weight: bold; width: 30px; white-space: nowrap;">ไม่ผ่าน</th>
+                            </tr>
+                        `;
+                    }
+
+                    function generateTableRow() {
+                        return `
+                            <tr style="text-align: center;">
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 8px; background-color: #fafafa;"></div>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: center; font-size: 8px;"></div>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: center; font-size: 8px;"></div>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: center; font-size: 7.5px;"></div>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: center; font-size: 7.5px;"></div>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: center; font-size: 7.5px;"></div>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: center; font-size: 7.5px;"></div>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 0;">
+                                    <div contenteditable="true" class="table-input" style="height: 11.5px; outline: none; display: flex; align-items: center; justify-content: flex-start; padding-left: 4px; font-size: 8px;"></div>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                </script>
+
+                <div style="display: table-cell; width: 49%; vertical-align: top;">
+                    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; border: 1px solid #000;">
+                        <thead>
+                            <script>document.write(generateTableHeader());</script>
+                        </thead>
+                        <tbody>
+                            <script>
+                                for (let i = 1; i <= 45; i++) {
+                                    document.write(generateTableRow());
+                                }
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display: table-cell; width: 2%;"></div>
+
+                <div style="display: table-cell; width: 49%; vertical-align: top;">
+                    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; border: 1px solid #000;">
+                        <thead>
+                            <script>document.write(generateTableHeader());</script>
+                        </thead>
+                        <tbody>
+                            <script>
+                                for (let i = 1; i <= 45; i++) {
+                                    document.write(generateTableRow());
+                                }
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: flex-start; font-size: 11px; font-family: sans-serif; color: #000;">
+                <div style="font-weight: bold;">
+                    หมายเหตุ : &nbsp;&nbsp;จำนวนที่ต้องตรวจสอบ = 0.1% ของจำนวนยอดสั่งผลิต
+                </div>
+                <div style="font-weight: bold; text-align: right;">
+                    FORM-QAD-66 &nbsp;ฉบับที่ 0 &nbsp;16 ธันวาคม 2567
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

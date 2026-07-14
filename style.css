@@ -1,0 +1,280 @@
+/* ==========================================================
+   PAGE 1 STYLES
+   ========================================================== */
+/* ==========================================
+   CSS RESET & BASE STYLES
+   ========================================== */
+:root {
+  --color-border: #000000;
+  --color-bg-sub: #fcfcfc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Sarabun', sans-serif;
+  background-color: #f0f2f5;
+  padding: 20px 0;
+}
+
+/* ==========================================
+   A4 PAGE CONTAINER
+   ========================================== */
+.doc-shell {
+  display: flex;
+  justify-content: center;
+}
+
+.a4-page {
+  width: 210mm;
+  height: 297mm;
+  background: #ffffff;
+  padding: 8mm 15mm 15mm 15mm; /* ปรับลดขอบบนเพื่อให้ขยับขึ้นชิดขอบบนมากขึ้น เพิ่มพื้นที่ด้านล่าง */
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================
+   PAGE MASTHEAD 
+   ========================================== */
+.page-masthead {
+  margin-bottom: 15px;
+}
+
+.masthead-upper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 5px;
+}
+
+.logo-placeholder {
+  border: none;
+  width: 40px;
+  height: auto;
+  object-fit: contain;
+  padding: 0;
+  display: block;
+}
+
+.company-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.masthead-divider {
+  height: 1.5px;
+  background-color: var(--color-border);
+  margin-bottom: 10px;
+}
+
+.masthead-report-name {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ==========================================
+   EXACT HEADER BLOCK (ตารางข้อมูลส่วนบน)
+   ========================================== */
+.exact-header-block {
+  margin-bottom: 15px;
+}
+
+.header-grid {
+  display: flex;
+  gap: 15px;
+}
+
+.header-table {
+  width: 50%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.header-table td {
+  border: 1px solid var(--color-border);
+  padding: 4px 6px;
+  font-size: 13px;
+  height: 30px;
+}
+
+.header-table .label {
+  font-weight: 600;
+  width: 30%;
+  background-color: #fafafa;
+}
+
+.header-table .label-sub {
+  font-size: 11px;
+  font-weight: 600;
+  width: 25%;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+.header-table .value-sub {
+  width: 25%;
+}
+
+/* ==========================================
+   QC TABLE 
+   ========================================== */
+.qc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  table-layout: fixed; 
+}
+
+/* ล็อกขนาดความกว้างตามสัดส่วนเดิมของคุณเพื่อป้องกันโครงสร้างเพี้ยน */
+.qc-table th:first-child,
+.qc-table td:first-child {
+  width: 24% !important;
+}
+
+.qc-table th, 
+.qc-table td {
+  border: 1px solid var(--color-border);
+  padding: 5px 1px;
+  font-size: 11px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.qc-table td.param-name {
+  text-align: left;
+  padding-left: 6px;
+}
+
+.qc-table thead th {
+  background-color: var(--color-bg-sub);
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+/* จัดให้ข้อความภายในหัวตารางเรียงแถวเดี่ยว ดันชิดซ้าย และเว้นระยะห่าง */
+.th-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* ดันคำว่า ครั้งที่ ชิดซ้ายสุดตามต้องการ */
+  padding: 0 4px;             /* เว้นระยะไม่ให้ชิดเส้นขอบตารางเกินไป */
+  width: 100%;
+  white-space: nowrap;
+  gap: 6px;                   /* เว้นช่องไฟระหว่างตัวอักษรกับกล่องพิมพ์ */
+}
+
+/* จุดแก้ไข: ลบเส้นขอบ (border) และพื้นหลังสีขาวออก เพื่อให้เรียบเนียนกลืนกับหัวตาราง */
+.header-input {
+  flex: 1;                     /* ขยายขนาดความยาวกล่องให้ยาวเต็มพื้นที่คลิกง่ายเหมือนเดิม */
+  height: 18px !important;
+  background-color: transparent !important; /* โปร่งใสกลืนไปกับหัวตาราง */
+  border: none !important;     /* ลบเส้นกรอบสี่เหลี่ยมออก 100% ตามที่ขอครับ */
+  outline: none;
+  text-align: center !important;        /* ล็อกตัวเลขให้อยู่กึ่งกลางระนาบเดียวกับข้อความ */
+  font-weight: bold;
+  display: inline-block;
+  line-height: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+/* แสดงสีไฮไลท์อ่อนๆ เฉพาะเวลาที่กำลังเอาเมาส์จิ้มพิมพ์อยู่ เพื่อให้ผู้ใช้รู้ว่าอยู่ช่องไหน */
+.header-input:focus {
+  background-color: #e6f4ff !important;
+  border-radius: 2px;
+}
+
+.qc-table thead tr:nth-child(2) th {
+  font-size: 9.5px;
+  font-weight: 500;
+  padding: 6px 0px;
+  white-space: nowrap;
+}
+
+.qc-table thead tr:nth-child(2) th:nth-child(odd) {
+  width: 10.4% !important;
+}
+.qc-table thead tr:nth-child(2) th:nth-child(even) {
+  width: 4.8% !important;
+}
+
+.row-check-time td.param-name {
+  font-weight: 600;
+  background-color: #fafafa;
+}
+
+.table-input {
+  width: 100%;
+  min-height: 18px;
+  outline: none;
+  word-break: break-all;
+}
+
+.table-input:focus {
+  background-color: #e6f4ff; 
+}
+
+.text-center { text-align: center; }
+.font-mono { font-family: 'IBM Plex Mono', monospace; }
+.font-bold { font-weight: bold; }
+
+/* ==========================================
+   PAGE FOOTER BAR
+   ========================================== */
+.page-footer-bar {
+  position: absolute;
+  bottom: 15mm;
+  left: 15mm;
+  right: 15mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #333333;
+}
+
+/* ==========================================================
+   PAGE 2 STYLES
+   ========================================================== */
+   /* ==========================================
+   A4 PAGE CONTAINER
+   ========================================== */
+.doc-shell {
+  display: flex;
+  flex-direction: column;  /* จัดให้เรียงลงมาเป็นแนวตั้ง */
+  align-items: center;      /* จัดหน้าเอกสารให้อยู่กึ่งกลางหน้าจอ */
+  gap: 20px;               /* เพิ่มระยะห่างระหว่างหน้า 1 และ หน้า 2 */
+}
+
+.a4-page {
+  width: 210mm;
+  height: 297mm;
+  background: #ffffff;
+  padding: 8mm 15mm 15mm 15mm; 
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* นำ margin ออกหรือปล่อยไว้ก็ได้ เพราะใช้ gap ด้านบนช่วยเว้นระยะแล้ว */
+}
+
+.pallet-table th, 
+.pallet-table td {
+  border: 1px solid #000000 !important;
+  vertical-align: middle;
+}
+
+.pallet-table .table-input {
+  border: none !important;
+  height: 28px;
+  line-height: 28px;
+  background-color: transparent;
+}
+
+.pallet-table .table-input:focus {
+  background-color: #e6f4ff !important;
+}
+
